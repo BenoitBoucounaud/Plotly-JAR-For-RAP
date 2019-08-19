@@ -1,0 +1,33 @@
+{
+	"trace": {
+		"x": "false",
+		"y": "false",
+		"type": "'heatmap'",
+		"name": "false",
+		"textfont": "{family: 'Times New Roman'}",
+		"textposition": "'bottom center'",
+		"colorscale": "[[0, '#3D9970'], [1, '#001f3f']]",
+		"showscale":"true",
+		"hoverinfo":"'all'"
+	},
+	"layout": {
+		"title": "false",
+		"showtitle": "false",
+		"showlegend": "false",
+		"margin": "{l: 40, r: 20, b: 30, t: 40}",
+		"paper_bgcolor": "'rgba(0,0,0,0)'",
+		"plot_bgcolor": "'rgba(0,0,0,0)'",
+		"height": "false",
+		"width": "false",
+		"annotations": "[]",
+		"xaxis": "{ticks: 'inside',side: 'bottom'}",
+		"yaxis": "{ticks: 'inside', autosize : true}"
+	},
+	"options": {
+		"showLink": "false",
+		"scrollZoom": "true",
+		"staticPlot": "false",
+		"displayModeBar": "true",
+		"displaylogo": "false"
+	}
+}

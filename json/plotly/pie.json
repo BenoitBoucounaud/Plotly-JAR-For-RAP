@@ -1,0 +1,31 @@
+{
+	"trace": {
+		"type": "'pie'",
+		"name": "false",
+		"labels": "false",
+		"textfont": "{family: 'Times New Roman'}",
+		"textposition": "'bottom center'",
+		"hoverinfo": "'all'",
+		"domain": "{}",
+		"hole": "0.0",
+		"marker": "{colors: ['rgb(33, 75, 99)', 'rgb(79, 129, 102)', 'rgb(151, 179, 100)', 'rgb(175, 49, 35)', 'rgb(36, 73, 147)']}"
+	},
+	"layout": {
+		"title": "false",
+		"grid": "{rows : 1, columns: 1}",
+		"showtitle": "false",
+		"showlegend": "false",
+		"margin": "{l: 40, r: 20, b: 30, t: 40}",
+		"paper_bgcolor": "'rgba(0,0,0,0)'",
+		"plot_bgcolor": "'rgba(0,0,0,0)'",
+		"height" : "false",
+		"width" : "false"
+	},
+	"options": {
+		"showLink": "false",
+		"scrollZoom": "true",
+		"staticPlot": "false",
+		"displayModeBar": "true",
+		"displaylogo": "false"
+	}
+}
