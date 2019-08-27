@@ -3,6 +3,7 @@ package main;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.rap.json.JsonObject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.json.JSONObject;
@@ -82,9 +83,10 @@ import ui.graphCompsite.GraphComp;
  * </li>
  * <li><b>Rest of the call exemple:</b><br>
  * <br>
- * MainBuilder main = new MainBuilder();<br>
- * GraphComp gc = (GraphComp) main.build("scatter", traces, layoutChart,
- * options, HomeComposite);</li>
+ * String[] types = {"bar", "scatter"}; MainBuilder main = new
+ * MainBuilder();<br>
+ * GraphComp gc = (GraphComp) main.build(types, traces, layoutChart, options,
+ * HomeComposite);</li>
  * </ul>
  * 
  * @author Benoit Boucounaud
@@ -104,7 +106,8 @@ public class MainBuilder {
 	 * 
 	 * 
 	 * 
-	 * @param type    String - Type of chart (only surface for 3D chart)
+	 * @param type    String[] - Type of chart (only surface for 3D chart) (ex:
+	 *                ['scatter', 'bar']
 	 * 
 	 * @param traces  String [][] - full references :
 	 *                https://plot.ly/javascript/reference/ <br>
@@ -188,7 +191,7 @@ public class MainBuilder {
 	 * 
 	 * @return Object - Must be convert to GraphComp <br>
 	 */
-	public Object build(String type, String[][] traces, String[] layout, String[] options, Composite parent) {
+	public Object build(String[] type, String[][] traces, String[] layout, String[] options, Composite parent) {
 
 		TraceModel[] traceModels = traceModelBuiler(type, traces);
 		OptionsModel optionsModel = optionsBuilder(options);
@@ -196,12 +199,16 @@ public class MainBuilder {
 		/*
 		 * 2D
 		 */
-		if (!type.equals(SURFACE)) {
+		if (!type[0].equals(SURFACE)) {
 
 			Layout2DModel layout2D = layout2DBuilder(layout);
 			D2Factory sf = new D2Factory();
 
 			script = sf.createScript(traceModels, layout2D, optionsModel);
+			
+			JSONObject test = new JSONObject(script);
+			
+			System.out.println(JsonObject.readFrom(test.toString()));
 
 			if (parent != null)
 				return createComposite(script, parent);
@@ -213,7 +220,7 @@ public class MainBuilder {
 		/*
 		 * SURFACE
 		 */
-		else if (type.equals(SURFACE)) {
+		else if (type[0].equals(SURFACE)) {
 
 			Layout3DModel layout3D = layout3DBuilder(layout);
 			SurfaceFactory sf = new SurfaceFactory();
@@ -254,7 +261,7 @@ public class MainBuilder {
 	 *                [x][] trace [][x] parameters<br>
 	 * 
 	 *                <ul>
-	 *                <li>Datas </li>
+	 *                <li>Datas</li>
 	 *                <li>Mode : Determines the drawing mode for this scatter
 	 *                trace.</li>
 	 *                <li>Name : Sets the trace name. The trace name appear as the
@@ -269,7 +276,7 @@ public class MainBuilder {
 	 * @param layout  String[] - layout parameters (can be null)
 	 * 
 	 *                <ul>
-	 *                <li>Title : chart title </li>
+	 *                <li>Title : chart title</li>
 	 *                <li>2D Chart only - Xaxis : parameters of X axis</li>
 	 *                <li>2D Chart only - Yaxis : parameters of Y axis</li>
 	 *                <li>3D Chart only - Scene : chart representation options</li>
@@ -279,37 +286,38 @@ public class MainBuilder {
 	 *                <li>Auto size : Determines whether or not a layout width or
 	 *                height that has been left undefined by the user is initialized
 	 *                on each relayout.</li>
-	 *                <li>Height </li>
-	 *                <li>Width </li>
-	 *                <li>Margin </li>
+	 *                <li>Height</li>
+	 *                <li>Width</li>
+	 *                <li>Margin</li>
 	 *                <li>Annotation : An annotation is a text element that can be
 	 *                placed anywhere in the plot.</li>
 	 *                </ul>
 	 * 
 	 * @param options String[] - options parameters(can be null)<br>
 	 *                <ul>
-	 *                <li>Scroll zoom : enable zoom </li>
+	 *                <li>Scroll zoom : enable zoom</li>
 	 * 
-	 *                <li>Static plot : enable static plot </li>
+	 *                <li>Static plot : enable static plot</li>
 	 * 
-	 *                <li>Display ModeBar : display modeBar </li>
+	 *                <li>Display ModeBar : display modeBar</li>
 	 * 
 	 *                <li>Display logo : display logo</li>
 	 * 
 	 *                <li>Responsive : display responsive</li>
 	 *                </ul>
 	 * 
-	 * @param gc      GraphComp - Parent composite where the final composite is placed
+	 * @param gc      GraphComp - Parent composite where the final composite is
+	 *                placed
 	 * 
 	 */
-	public void updateData(String type, String[][] traces, String[] layout, String[] options, GraphComp gc) {
+	public void updateData(String[] type, String[][] traces, String[] layout, String[] options, GraphComp gc) {
 
 		TraceModel[] traceModels = traceModelBuiler(type, traces);
 		OptionsModel optionsModel = optionsBuilder(options);
 		/*
 		 * 2D
 		 */
-		if (!type.equals(SURFACE)) {
+		if (!type[0].equals(SURFACE)) {
 
 			Layout2DModel layout2D = layout2DBuilder(layout);
 			D2Factory sf = new D2Factory();
@@ -320,7 +328,7 @@ public class MainBuilder {
 		/*
 		 * SURFACE
 		 */
-		else if (type.equals(SURFACE)) {
+		else if (type[0].equals(SURFACE)) {
 
 			Layout3DModel layout3D = layout3DBuilder(layout);
 			SurfaceFactory sf = new SurfaceFactory();
@@ -336,14 +344,14 @@ public class MainBuilder {
 	 * PLOTLY
 	 */
 
-	private TraceModel[] traceModelBuiler(String type, String[][] traces) {
+	private TraceModel[] traceModelBuiler(String type[], String[][] traces) {
 		TraceModel[] traceModels = new TraceModel[traces.length];
 
 		for (int i = 0; i < traces.length; i++) {
 			TraceModel tm = new TraceModel();
 
 			// Type
-			tm.setType(type);
+			tm.setType(type[i]);
 
 			for (int j = 0; j < traces[i].length; j++) {
 
