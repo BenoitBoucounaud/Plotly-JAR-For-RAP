@@ -9,3 +9,5 @@ Import "d3.min.js", "plotly.js", "plotlyGraph.js" and "plotlyFast.js" in WebCont
 
 Import the "json" folder in the user working directory.
 
+Version:
+- 3.1 : multi-2D type chart added to main builder.
