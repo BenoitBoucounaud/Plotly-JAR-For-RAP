@@ -1,6 +1,10 @@
 
 # Plotly-JAR-For-RAP
 
+### Hide your data and chart options.
+### Data selection option.
+
+
 Easy way to quickly create a plotly chart as a Composite.
 
 Use MainBuilder class to create a complexe chart, use a fast_chart class to quickly build a specific type chart (more detail in doc).
