@@ -2,7 +2,7 @@
 # Plotly-JAR-For-RAP
 
 ### Hide your data and chart options.
-### Data selection option.
+### Data selection option from the chart.
 
 
 Easy way to quickly create a plotly chart as a Composite.
