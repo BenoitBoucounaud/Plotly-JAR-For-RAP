@@ -161,8 +161,7 @@ public class MainBuilder {
 	 *                ex : "width : 800"</li>
 	 *                <li>Margin : <br>
 	 *                ex : "margin: {l: 50, r: 50, b: 100, t: 100, pad: 4 }"</li>
-	 *                <li>Annotation : An annotation is a text element that can be
-	 *                placed anywhere in the plot.<br>
+	 *                <li>Other option : Any other layout option in plotly.<br>
 	 *                ex : "hovermode:'closest', slider:{ visible:true,
 	 *                plotlycommand:'animate', args:[ 'slider.value', {
 	 *                duration:400, ease:'cubic-in-out' } ]}"</li>
@@ -207,8 +206,6 @@ public class MainBuilder {
 			script = sf.createScript(traceModels, layout2D, optionsModel);
 			
 			JSONObject test = new JSONObject(script);
-			
-			System.out.println(JsonObject.readFrom(test.toString()));
 
 			if (parent != null)
 				return createComposite(script, parent);
@@ -289,8 +286,7 @@ public class MainBuilder {
 	 *                <li>Height</li>
 	 *                <li>Width</li>
 	 *                <li>Margin</li>
-	 *                <li>Annotation : An annotation is a text element that can be
-	 *                placed anywhere in the plot.</li>
+	 *                <li>Other option : Any other layout option in plotly.</li>
 	 *                </ul>
 	 * 
 	 * @param options String[] - options parameters(can be null)<br>
@@ -438,8 +434,8 @@ public class MainBuilder {
 				else if (layout[i].substring(0, 6).equals("margin"))
 					layout2D.setMargin(layout[i]);
 
-				// Annotation
-				else if (layout[i].substring(0, 10).equals("annotation"))
+				// Other option
+				else
 					layout2D.setAnnotations(layout[i]);
 
 			}
@@ -547,7 +543,7 @@ public class MainBuilder {
 	 * Return the selected data.<br>
 	 * Works with 2D charts only<br>
 	 * 
-	 * @return Map&ltString, List&ltDouble&gt&gt - Map of selected data.<br>
+	 * @return Map&ltString, List&ltString&gt&gt - Map of selected data.<br>
 	 *         <br>
 	 *         Keys : <br>
 	 *         <ul>
@@ -558,7 +554,7 @@ public class MainBuilder {
 	 *         <li>"y" : y values</li>
 	 *         </ul>
 	 */
-	public Map<String, List<Double>> getSelectedDatas() {
+	public Map<String, List<String>> getSelectedDatas() {
 
 		return GraphComp.getSelectedMap();
 	}

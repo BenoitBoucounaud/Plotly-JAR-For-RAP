@@ -11,3 +11,4 @@ Import the "json" folder in the user working directory.
 
 Version:
 - 3.1 : multi-2D type chart added to main builder.
+- 3.2 : function getSelectedData() of MainBuilder and PlotlyScatter now return Map<String, List<String>>.

@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class GraphComp extends Composite {
 	private static final long serialVersionUID = 6419634096566320689L;
 	private final RemoteObject remoteObject;
-	private static Map<String, List<Double>> selectedMap;
+	private static Map<String, List<String>> selectedMap;
 
 	public GraphComp(Composite parent, int style) {
 		super(parent, style);
@@ -72,19 +72,19 @@ public class GraphComp extends Composite {
 
 						JsonArray arr = arrayValue.asArray();
 
-						List<Double> curveNumberList = new ArrayList<Double>();
-						List<Double> pointNumberList = new ArrayList<Double>();
-						List<Double> xList = new ArrayList<Double>();
-						List<Double> yList = new ArrayList<Double>();
+						List<String> curveNumberList = new ArrayList<String>();
+						List<String> pointNumberList = new ArrayList<String>();
+						List<String> xList = new ArrayList<String>();
+						List<String> yList = new ArrayList<String>();
 
 						for (int i = 0; i < arr.size(); i++) {
 
 							JsonObject obj = arr.get(i).asObject();
 
-							curveNumberList.add(Double.valueOf(obj.get("curveNumber").asDouble()));
-							pointNumberList.add(Double.valueOf(obj.get("pointNumber").asDouble()));
-							xList.add(Double.valueOf(obj.get("x").asDouble()));
-							yList.add(Double.valueOf(obj.get("y").asDouble()));
+							curveNumberList.add(String.valueOf(obj.get("curveNumber")));
+							pointNumberList.add(String.valueOf(obj.get("pointNumber")));
+							xList.add(String.valueOf(obj.get("x")));
+							yList.add(String.valueOf(obj.get("y")));
 						}
 
 						selectedMap = new HashMap<>();
@@ -127,7 +127,7 @@ public class GraphComp extends Composite {
 		remoteObject.set("options", JsonObject.readFrom(obj.toString()));
 	}
 
-	public static Map<String, List<Double>> getSelectedMap() {
+	public static Map<String, List<String>> getSelectedMap() {
 		return selectedMap;
 	}
 

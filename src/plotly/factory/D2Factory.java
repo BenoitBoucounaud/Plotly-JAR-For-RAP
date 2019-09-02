@@ -112,14 +112,14 @@ public class D2Factory {
 			if (layoutModel.getMargin() != null)
 				layout += layoutModel.getMargin() + ",";
 			else
-				layout += "margin: { l: 20, r: 20, b: 20, t: 50 },";
+				layout += "margin: { l: 50, r: 50, b: 50, t: 50 },";
 
 			// Annotations
 			if (layoutModel.getAnnotations() != null)
 				layout += layoutModel.getAnnotations() + ",";
 
 		} else {
-			layout += " showlegend : false, autosize : true , margin: { l: 20, r: 20, b: 20, t: 50 },";
+			layout += " showlegend : false, autosize : true , margin: { l: 50, r: 50, b: 50, t: 50 },";
 		}
 
 		layout = layout.substring(0, layout.length() - 1) + " }, ";

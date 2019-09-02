@@ -50,7 +50,7 @@ public class PlotlyScatter extends Composite {
 	// To rebuild
 	private static double[][][] fixedDatas;
 
-	private static Map<String, List<Double>> selectedMap;
+	private static Map<String, List<String>> selectedMap;
 	private static HashMap<String, String> optionsMap = null;
 
 	// Keys for optionsMap
@@ -129,19 +129,19 @@ public class PlotlyScatter extends Composite {
 
 						JsonArray arr = arrayValue.asArray();
 
-						List<Double> curveNumberList = new ArrayList<Double>();
-						List<Double> pointNumberList = new ArrayList<Double>();
-						List<Double> xList = new ArrayList<Double>();
-						List<Double> yList = new ArrayList<Double>();
+						List<String> curveNumberList = new ArrayList<String>();
+						List<String> pointNumberList = new ArrayList<String>();
+						List<String> xList = new ArrayList<String>();
+						List<String> yList = new ArrayList<String>();
 
 						for (int i = 0; i < arr.size(); i++) {
 
 							JsonObject obj = arr.get(i).asObject();
 
-							curveNumberList.add(Double.valueOf(obj.get("curveNumber").asDouble()));
-							pointNumberList.add(Double.valueOf(obj.get("pointNumber").asDouble()));
-							xList.add(Double.valueOf(obj.get("x").asDouble()));
-							yList.add(Double.valueOf(obj.get("y").asDouble()));
+							curveNumberList.add(String.valueOf(obj.get("curveNumber")));
+							pointNumberList.add(String.valueOf(obj.get("pointNumber")));
+							xList.add(String.valueOf(obj.get("x")));
+							yList.add(String.valueOf(obj.get("y")));
 						}
 
 						selectedMap = new HashMap<>();
@@ -195,7 +195,7 @@ public class PlotlyScatter extends Composite {
 	/**
 	 * Return the selected data.<br>
 	 * 
-	 * @return Map&ltString, List&ltDouble&gt&gt - Map of selected data.<br>
+	 * @return Map&ltString, List&ltString&gt&gt - Map of selected data.<br>
 	 *         <br>
 	 *         Keys : <br>
 	 *         <ul>
@@ -206,7 +206,7 @@ public class PlotlyScatter extends Composite {
 	 *         <li>"y" : y values</li>
 	 *         </ul>
 	 */
-	public Map<String, List<Double>> getSelectedDatas() {
+	public Map<String, List<String>> getSelectedDatas() {
 
 		return selectedMap;
 	}
