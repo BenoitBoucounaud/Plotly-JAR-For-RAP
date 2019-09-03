@@ -1,11 +1,18 @@
-var divGraphID = 0;
+var currentdate = new Date(); 
+var datetime = "time:" + currentdate.getDate() + "/"
+                + currentdate.getMonth()  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds() + "."
+                + currentdate.getMilliseconds();
+
 
 PlotlyGraph = function(parent) {
-
 	this.createElement = function(parent) {
-		divGraphID = divGraphID + 1;
+		datetime = datetime + "_1";
 		var element = document.createElement("div");
-		element.id = "divGraph" + divGraphID;
+		element.id = "divGraph_at_" + datetime;
 		element.style.position = "absolute";
 		element.style.left = "0";
 		element.style.top = "0";
