@@ -17,3 +17,4 @@ Version:
 - 3.1 : multi-2D type chart added to main builder.
 - 3.2 : function getSelectedData() of MainBuilder and PlotlyScatter now return Map<String, List<String>>.
 - 3.3 : **new class PlotlyBlank** : make your own chart from A to Z. Fix div naming bug.
+- 3.4 : Fix javaScript functions names bug and remoteObject bug.

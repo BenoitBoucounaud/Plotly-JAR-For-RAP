@@ -1,16 +1,17 @@
-var currentdate = new Date(); 
-var datetime = "time:" + currentdate.getDate() + "/"
-                + currentdate.getMonth()  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds() + "."
-                + currentdate.getMilliseconds();
-
+var divGraphID = 0;
+var currentdate = new Date();
+var datetime = "time:" + currentdate.getDate() + "/" + currentdate.getMonth()
+		+ "/" + currentdate.getFullYear() + " @ " + currentdate.getHours()
+		+ ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds() + "."
+		+ currentdate.getMilliseconds();
 
 PlotlyGraph = function(parent) {
+
+	conosle.log('Creation  of PlotlyGraph');
+
 	this.createElement = function(parent) {
-		datetime = datetime + "_1";
+		divGraphID = divGraphID + 1;
+		datetime = datetime + "_" + divGraphID;
 		var element = document.createElement("div");
 		element.id = "divGraph_at_" + datetime;
 		element.style.position = "absolute";

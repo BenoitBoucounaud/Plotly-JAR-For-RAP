@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Listener;
  * this composite.<br>
  * <br>
  * Exemple:<br>
- * double[][][] datas = { { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } }, { { 6, 7,
+ * String[][][] datas = { { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } }, { { 6, 7,
  * 8, 9, 10 }, { 1, 2, 3, 4, 5 } } }; <br>
  * PlotlyScatter ps = new PlotlyScatter(HomeComposite, SWT.NONE, datas);<br>
  * 
@@ -48,7 +48,7 @@ public class PlotlyScatter extends Composite {
 	private final RemoteObject remoteObject;
 
 	// To rebuild
-	private static double[][][] fixedDatas;
+	private static String[][][] fixedDatas;
 
 	private static Map<String, List<String>> selectedMap;
 	private static HashMap<String, String> optionsMap = null;
@@ -69,10 +69,10 @@ public class PlotlyScatter extends Composite {
 	 * @param parent A widget which will be the parent of the new instance (cannot
 	 *               be null)
 	 * @param style  The style of widget to construct
-	 * @param datas  double[][][] - Datas form : [ [ [x], [y] ], [ [x], [y] ], ... ]
+	 * @param datas  String[][][] - Datas form : [ [ [x], [y] ], [ [x], [y] ], ... ]
 	 * @throws FileNotFoundException
 	 */
-	public PlotlyScatter(Composite parent, int style, double[][][] datas) {
+	public PlotlyScatter(Composite parent, int style, String[][][] datas) {
 		super(parent, style);
 
 		// Cleaner
@@ -83,7 +83,7 @@ public class PlotlyScatter extends Composite {
 		loader.requireJs("js/d3.min.js");
 		loader.requireJs("js/plotly.js");
 		loader.requireJs("js/plotlyFast.js");
-		remoteObject = RWT.getUISession().getConnection().createRemoteObject("PlotlyGraph");
+		remoteObject = RWT.getUISession().getConnection().createRemoteObject("PlotlyGraphFast");
 		remoteObject.set("parent", WidgetUtil.getId(this));
 
 		try {
@@ -180,10 +180,10 @@ public class PlotlyScatter extends Composite {
 	/**
 	 * Update the current chart. <br>
 	 * 
-	 * @param datas double[][][] - Datas form : [ [ [x], [y] ], [ [x], [y] ], ... ]
+	 * @param datas String[][][] - Datas form : [ [ [x], [y] ], [ [x], [y] ], ... ]
 	 * 
 	 */
-	public void updateData(double[][][] datas) throws FileNotFoundException {
+	public void updateData(String[][][] datas) throws FileNotFoundException {
 		buildScatter(datas);
 	}
 
@@ -211,11 +211,24 @@ public class PlotlyScatter extends Composite {
 		return selectedMap;
 	}
 
-	private void buildScatter(double[][][] datas) throws FileNotFoundException {
+	private void buildScatter(String[][][] datas) throws FileNotFoundException {
 
 		// Read JSON file;
 		// All json's value must be string
 
+		for (int i = 0; i < datas.length; i++) {
+
+			for (int j = 0; j < datas[i][0].length; j++)
+				if (!datas[i][0][j].substring(0, 1).equals("'")
+						&& !datas[i][0][j].substring(datas[i][0][j].length() - 1, datas[i][0][j].length()).equals("'"))
+					datas[i][0][j] = "'" + datas[i][0][j] + "'";
+
+			for (int j = 0; j < datas[i][1].length; j++)
+				if (!datas[i][1][j].substring(0, 1).equals("'")
+						&& !datas[i][1][j].substring(datas[i][1][j].length() - 1, datas[i][1][j].length()).equals("'"))
+					datas[i][1][j] = "'" + datas[i][1][j] + "'";
+		}
+		
 		fixedDatas = datas;
 
 		String directory = System.getProperty("user.dir");

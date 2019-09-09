@@ -1,16 +1,17 @@
-var currentdate = new Date(); 
-var datetime = "time:" + currentdate.getDate() + "/"
-                + currentdate.getMonth()  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds() + "."
-                + currentdate.getMilliseconds();
+var divGraphID = 0;
+var currentdate = new Date();
+var datetime = "time:" + currentdate.getDate() + "/" + currentdate.getMonth()
+		+ "/" + currentdate.getFullYear() + " @ " + currentdate.getHours()
+		+ ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds() + "."
+		+ currentdate.getMilliseconds();
 
+PlotlyGraphBlank = function(parent) {
 
-PlotlyGraph = function(parent) {
+	console.log('Creation of PlotlyGGraphBlank');
+
 	this.createElement = function(parent) {
-		datetime = datetime + "_1";
+		divGraphID = divGraphID + 1;
+		datetime = datetime + "_" + divGraphID;
 		var element = document.createElement("div");
 		element.id = "divGraph_at_" + datetime;
 		element.style.position = "absolute";
@@ -146,11 +147,11 @@ PlotlyGraph = function(parent) {
 	parent.addListener("Resize", this.resize.bind(this));
 };
 
-rap.registerTypeHandler("PlotlyGraph", {
+rap.registerTypeHandler("PlotlyGraphBlank", {
 
 	factory : function(properties) {
 		var parent = rap.getObject(properties.parent);
-		return new PlotlyGraph(parent);
+		return new PlotlyGraphBlank(parent);
 	},
 
 	destructor : "destroy",

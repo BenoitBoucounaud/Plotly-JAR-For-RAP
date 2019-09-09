@@ -88,7 +88,7 @@ public class PlotlyPie extends Composite {
 		loader.requireJs("js/d3.min.js");
 		loader.requireJs("js/plotly.js");
 		loader.requireJs("js/plotlyFast.js");
-		remoteObject = RWT.getUISession().getConnection().createRemoteObject("PlotlyGraph");
+		remoteObject = RWT.getUISession().getConnection().createRemoteObject("PlotlyGraphFast");
 		remoteObject.set("parent", WidgetUtil.getId(this));
 
 		try {

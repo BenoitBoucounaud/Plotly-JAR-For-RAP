@@ -1,1 +1,7 @@
+main
+org.json
 plotly.blank
+plotly.factory
+plotly.fastCharts
+plotly.model
+ui.graphCompsite

@@ -81,7 +81,7 @@ public class PlotlyBlank extends Composite {
 		loader.requireJs("js/d3.min.js");
 		loader.requireJs("js/plotly.js");
 		loader.requireJs("js/plotlyBlank.js");
-		remoteObject = RWT.getUISession().getConnection().createRemoteObject("PlotlyGraph");
+		remoteObject = RWT.getUISession().getConnection().createRemoteObject("PlotlyGraphBlank");
 		remoteObject.set("parent", WidgetUtil.getId(this));
 
 		buildBlank(traces, layout, options);
