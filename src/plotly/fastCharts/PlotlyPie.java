@@ -66,6 +66,11 @@ public class PlotlyPie extends Composite {
 	private static final String domain = "domain";
 	private static final String hole = "hole";
 	private static final String grid = "grid";
+	private static final String showLink = "showLink";
+	private static final String scrollZoom = "scroolZoom";
+	private static final String staticPlot = "staticPlot";
+	private static final String displayModeBar = "displayModeBar";
+	private static final String displayLogo = "displaylogo";
 
 	/**
 	 * Create the composite.</br>
@@ -384,6 +389,38 @@ public class PlotlyPie extends Composite {
 		while (itOptions.hasNext()) {
 			String key = itOptions.next();
 			String value = (String) options.get(key);
+
+			if (optionsMap != null) {
+
+				switch (key) {
+
+				case showLink:
+					if (optionsMap.get(showLink) != null)
+						value = optionsMap.get(showLink);
+					break;
+
+				case scrollZoom:
+					if (optionsMap.get(scrollZoom) != null)
+						value = optionsMap.get(scrollZoom);
+					break;
+
+				case staticPlot:
+					if (optionsMap.get(staticPlot) != null)
+						value = optionsMap.get(staticPlot);
+					break;
+
+				case displayModeBar:
+					if (optionsMap.get(displayModeBar) != null)
+						value = optionsMap.get(displayModeBar);
+					break;
+
+				case displayLogo:
+					if (optionsMap.get(displayLogo) != null)
+						value = optionsMap.get(displayLogo);
+					break;
+				}
+			}
+
 			str += key + " : " + value + ",";
 		}
 		str = str.substring(0, str.length() - 1) + "}";
@@ -660,4 +697,65 @@ public class PlotlyPie extends Composite {
 		}
 	}
 
+	/**
+	 * To update plot's options.<br>
+	 * 
+	 * @param option int - Option to change : <br>
+	 *               <ul>
+	 *               <li>1 : showLink</li>
+	 *               <li>2 : scrollZoom</li>
+	 *               <li>3 : staticPlot</li>
+	 *               <li>4 : displayModeBar</li>
+	 *               <li>5 : displaylogo</li>
+	 *               </ul>
+	 * @param bool   boolean - Option's value.
+	 * 
+	 */
+	public void upOptions(int option, boolean bool) {
+
+		if (optionsMap == null)
+			optionsMap = new HashMap<String, String>();
+
+		switch (option) {
+
+		case 1:
+			if (!optionsMap.containsKey(showLink))
+				optionsMap.put(showLink, String.valueOf(bool));
+			else
+				optionsMap.replace(showLink, String.valueOf(bool));
+
+		case 2:
+			if (!optionsMap.containsKey(scrollZoom))
+				optionsMap.put(scrollZoom, String.valueOf(bool));
+			else
+				optionsMap.replace(scrollZoom, String.valueOf(bool));
+
+		case 3:
+			if (!optionsMap.containsKey(staticPlot))
+				optionsMap.put(staticPlot, String.valueOf(bool));
+			else
+				optionsMap.replace(staticPlot, String.valueOf(bool));
+
+		case 4:
+			if (!optionsMap.containsKey(displayModeBar))
+				optionsMap.put(displayModeBar, String.valueOf(bool));
+			else
+				optionsMap.replace(displayModeBar, String.valueOf(bool));
+
+		case 5:
+			if (!optionsMap.containsKey(displayLogo))
+				optionsMap.put(displayLogo, String.valueOf(bool));
+			else
+				optionsMap.replace(displayLogo, String.valueOf(bool));
+
+		}
+
+		if (fixedDatas != null) {
+			try {
+				buildPie(fixedDatas);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

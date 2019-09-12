@@ -7,7 +7,7 @@ var datetime = "time:" + currentdate.getDate() + "/" + currentdate.getMonth()
 
 PlotlyGraph = function(parent) {
 
-	conosle.log('Creation  of PlotlyGraph');
+	console.log('Creation  of PlotlyGraph');
 
 	this.createElement = function(parent) {
 		divGraphID = divGraphID + 1;

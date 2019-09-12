@@ -3,7 +3,6 @@ package main;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.rap.json.JsonObject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.json.JSONObject;
@@ -205,7 +204,6 @@ public class MainBuilder {
 
 			script = sf.createScript(traceModels, layout2D, optionsModel);
 			
-			JSONObject test = new JSONObject(script);
 
 			if (parent != null)
 				return createComposite(script, parent);

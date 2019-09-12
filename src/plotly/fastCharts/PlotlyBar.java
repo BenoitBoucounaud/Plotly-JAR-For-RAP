@@ -13,7 +13,8 @@ import java.util.Map;
 import java.io.InputStream;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.math3.stat.StatUtils;
 import org.eclipse.rap.json.JsonArray;
 import org.eclipse.rap.json.JsonObject;
 import org.eclipse.rap.json.JsonValue;
@@ -74,6 +75,11 @@ public class PlotlyBar extends Composite {
 	private static final String barmode = "barmode";
 	private static final String bargap = "bargap";
 	private static final String bargroupgap = "bargroupgap";
+	private static final String showLink = "showLink";
+	private static final String scrollZoom = "scroolZoom";
+	private static final String staticPlot = "staticPlot";
+	private static final String displayModeBar = "displayModeBar";
+	private static final String displayLogo = "displaylogo";
 
 	/**
 	 * Create the composite.</br>
@@ -224,10 +230,47 @@ public class PlotlyBar extends Composite {
 		return selectedMap;
 	}
 
+	private double foundZ(double[] values, double value) {
+		double variance = StatUtils.populationVariance(values);
+		double sd = Math.sqrt(variance);
+		double mean = StatUtils.mean(values);
+		double zscore = (value - mean) / sd;
+		return zscore;
+	}
+
 	private void buildBar(String[][][] datas) throws FileNotFoundException {
 
-		// Read JSON file;
-		// All json's value must be string
+		double yMin = 0.0;
+		double yMax = 0.0;
+
+		// Search min and max y
+		for (int i = 0; i < datas.length; i++) {
+
+			for (int j = 0; j < datas[i][1].length; j++)
+				if (datas[i][1][j].substring(0, 1).equals("'")
+						&& datas[i][1][j].substring(datas[i][1][j].length() - 1, datas[i][1][j].length()).equals("'"))
+					datas[i][1][j] = datas[i][1][j].substring(1, datas[i][1][j].length() - 1);
+
+			for (int j = 0; j < datas[i][1].length; j++) {
+
+				if (NumberUtils.isCreatable(datas[i][1][j])) {
+
+					double[] yValues = Arrays.stream(datas[i][1]).mapToDouble(Double::parseDouble).toArray();
+
+					double value = Double.valueOf(datas[i][1][j]);
+
+					if (yMin == 0.0 && Math.abs(foundZ(yValues, value)) < 3)
+						yMin = value;
+					else if (yMin > value && Math.abs(foundZ(yValues, value)) < 3)
+						yMin = value;
+
+					if (yMax == 0.0 && Math.abs(foundZ(yValues, value)) < 3)
+						yMax = value;
+					else if (yMax < value && Math.abs(foundZ(yValues, value)) < 3)
+						yMax = value;
+				}
+			}
+		}
 
 		for (int i = 0; i < datas.length; i++) {
 
@@ -371,7 +414,11 @@ public class PlotlyBar extends Composite {
 				}
 			}
 
-			str += key + " : " + value + ",";
+			if (key.equals(yAxisTitle) && (yMin != 0.0 || yMax != 0.0))
+				str += key + " : " + value.substring(0, 1) + "range : [" + yMin + "," + yMax + "], "
+						+ value.substring(1, value.length()) + ",";
+			else
+				str += key + " : " + value + ",";
 		}
 		str = str.substring(0, str.length() - 1) + "}, ";
 
@@ -381,6 +428,38 @@ public class PlotlyBar extends Composite {
 		while (itOptions.hasNext()) {
 			String key = itOptions.next();
 			String value = (String) options.get(key);
+
+			if (optionsMap != null) {
+
+				switch (key) {
+
+				case showLink:
+					if (optionsMap.get(showLink) != null)
+						value = optionsMap.get(showLink);
+					break;
+
+				case scrollZoom:
+					if (optionsMap.get(scrollZoom) != null)
+						value = optionsMap.get(scrollZoom);
+					break;
+
+				case staticPlot:
+					if (optionsMap.get(staticPlot) != null)
+						value = optionsMap.get(staticPlot);
+					break;
+
+				case displayModeBar:
+					if (optionsMap.get(displayModeBar) != null)
+						value = optionsMap.get(displayModeBar);
+					break;
+
+				case displayLogo:
+					if (optionsMap.get(displayLogo) != null)
+						value = optionsMap.get(displayLogo);
+					break;
+				}
+			}
+
 			str += key + " : " + value + ",";
 		}
 		str = str.substring(0, str.length() - 1) + "}";
@@ -733,6 +812,68 @@ public class PlotlyBar extends Composite {
 				buildBar(fixedDatas);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * To update plot's options.<br>
+	 * 
+	 * @param option int - Option to change : <br>
+	 *               <ul>
+	 *               <li>1 : showLink</li>
+	 *               <li>2 : scrollZoom</li>
+	 *               <li>3 : staticPlot</li>
+	 *               <li>4 : displayModeBar</li>
+	 *               <li>5 : displaylogo</li>
+	 *               </ul>
+	 * @param bool   boolean - Option's value.
+	 * 
+	 */
+	public void upOptions(int option, boolean bool) {
+
+		if (optionsMap == null)
+			optionsMap = new HashMap<String, String>();
+
+		switch (option) {
+
+		case 1:
+			if (!optionsMap.containsKey(showLink))
+				optionsMap.put(showLink, String.valueOf(bool));
+			else
+				optionsMap.replace(showLink, String.valueOf(bool));
+
+		case 2:
+			if (!optionsMap.containsKey(scrollZoom))
+				optionsMap.put(scrollZoom, String.valueOf(bool));
+			else
+				optionsMap.replace(scrollZoom, String.valueOf(bool));
+
+		case 3:
+			if (!optionsMap.containsKey(staticPlot))
+				optionsMap.put(staticPlot, String.valueOf(bool));
+			else
+				optionsMap.replace(staticPlot, String.valueOf(bool));
+
+		case 4:
+			if (!optionsMap.containsKey(displayModeBar))
+				optionsMap.put(displayModeBar, String.valueOf(bool));
+			else
+				optionsMap.replace(displayModeBar, String.valueOf(bool));
+
+		case 5:
+			if (!optionsMap.containsKey(displayLogo))
+				optionsMap.put(displayLogo, String.valueOf(bool));
+			else
+				optionsMap.replace(displayLogo, String.valueOf(bool));
+
+		}
+
+		if (fixedDatas != null) {
+			try {
+				buildBar(fixedDatas);
+			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
