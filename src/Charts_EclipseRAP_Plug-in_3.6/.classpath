@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="lib/commons-dbcp2-2.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.6.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-math3-3.6.1-tools.jar"/>
+	<classpathentry kind="lib" path="lib/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-pool2-2.4.2.jar"/>
+	<classpathentry kind="lib" path="lib/groovy-2.4.12-indy.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.core.runtime_3.13.0.v20170207-1030.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.e4.xwt_0.9.1.SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.e4.xwt.forms_0.9.1.SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.equinox.common_3.9.0.v20170207-1454.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.rap.jface_3.4.0.20171018-1122.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.rap.rwt_3.4.0.20171130-0837.jar"/>
+	<classpathentry kind="lib" path="lib/postgresql-42.1.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring-beans-4.3.11.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-4.3.11.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-support-4.3.11.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-core-4.3.11.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-expression-4.3.11.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-jdbc-4.3.11.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-tx-4.3.11.RELEASE.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

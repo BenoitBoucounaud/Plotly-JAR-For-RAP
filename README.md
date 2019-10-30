@@ -19,3 +19,4 @@ Version:
 - 3.3 : **new class PlotlyBlank** : make your own chart from A to Z. Fix div naming bug.
 - 3.4 : Fix javaScript functions names bug and remoteObject bug.
 - 3.5 : New function for the FastCharts : upOptions. Set the yaxis range according to the normal distribution law for FastCharts.
+- 3.6 : Remove the unnecessary GraphCom and Main class classes.
