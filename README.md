@@ -20,3 +20,4 @@ Version:
 - 3.4 : Fix javaScript functions names bug and remoteObject bug.
 - 3.5 : New function for the FastCharts : upOptions. Set the yaxis range according to the normal distribution law for FastCharts.
 - 3.6 : Remove the unnecessary GraphComp and Main class.
+- 3.7 Update path separator.
